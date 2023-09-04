@@ -1,0 +1,14 @@
+.idea
+*.json
+vendor
+.DS_Store
+.idea
+bin/
+__pycache__
+*.log
+*.pyc
+*.toml
+./*.ini
+.vscode
+env
+frontend/node_modules
