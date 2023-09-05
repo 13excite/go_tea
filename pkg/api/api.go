@@ -27,22 +27,3 @@ func (api *FakeAPI) GetWetherByCity(city string) WeatherResponse {
 		"6.08":     "+21",
 	}
 }
-
-// GetAvailableCities returns list of cities
-func (api *FakeAPI) GetAvailableCities() []string {
-	return []string{
-		"Berlin",
-		"Munchen",
-		"Frankfurt",
-		"Leipzig",
-		"Longon",
-		"Paris",
-		"Liverpool",
-		"Koln",
-		"Lion",
-		"Flensburg",
-		"Bordo",
-		"Erfurt",
-		"Dresden",
-	}
-}
