@@ -18,31 +18,31 @@ type WeatherResponse map[string]string
 func (api *FakeAPI) GetWetherByCity(city string) WeatherResponse {
 
 	switch city {
-	case "Berlin":
+	case "berlin":
 		return WeatherResponse{
 			"today":    "+3",
 			"tomorrow": "+4",
 			"1.12":     "+3",
 		}
-	case "Munchen":
+	case "munchen":
 		return WeatherResponse{
 			"today":    "0",
 			"tomorrow": "-1",
 			"1.12":     "+2",
 		}
-	case "Frankfurt":
+	case "frankfurt":
 		return WeatherResponse{
 			"today":    "+1",
 			"tomorrow": "0",
 			"1.12":     "+4",
 		}
-	case "Leipzig":
+	case "leipzig":
 		return WeatherResponse{
 			"today":    "+2",
 			"tomorrow": "+4",
 			"1.12":     "+2",
 		}
-	case "Longon":
+	case "longon":
 		return WeatherResponse{
 			"today":    "+8",
 			"tomorrow": "+10",
