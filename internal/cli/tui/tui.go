@@ -16,7 +16,9 @@ func NewTUICommand() *cobra.Command {
 		Short: "run terminal UI for the cli",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			fmt.Println("TUI STARTED!")
-			prompt.Interactive()
+
+			cmdSelectedByUser := &prompt.UserChoice{}
+			prompt.Interactive(cmd.Parent(), cmdSelectedByUser)
 
 			return nil
 		},
