@@ -15,19 +15,19 @@ var (
 	cityName string
 	// cityMap contains valid values of the 'cityName' argument
 	cityMap = map[string]struct{}{
-		"Berlin":    {},
-		"Munchen":   {},
-		"Frankfurt": {},
-		"Leipzig":   {},
-		"Longon":    {},
-		"Paris":     {},
-		"Liverpool": {},
-		"Koln":      {},
-		"Lion":      {},
-		"Flensburg": {},
-		"Bordo":     {},
-		"Erfurt":    {},
-		"Dresden":   {},
+		"berlin":    {},
+		"munchen":   {},
+		"frankfurt": {},
+		"leipzig":   {},
+		"longon":    {},
+		"paris":     {},
+		"liverpool": {},
+		"koln":      {},
+		"lion":      {},
+		"flensburg": {},
+		"bordo":     {},
+		"erfurt":    {},
+		"dresden":   {},
 	}
 )
 
@@ -37,13 +37,19 @@ type commandOpt func(command *cobra.Command)
 func NewCityCommand() *cobra.Command {
 	createCmd := &cobra.Command{
 		Use:   "city",
-		Short: "Get an info about weather in a specific city",
+		Short: "Get an info about weather by given city",
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			fmt.Println("WEATHER CITY STARTED")
 			return nil
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			api := api.New()
+
+			// validate the city name
+			_, ok := cityMap[cityName]
+			if !ok {
+				return fmt.Errorf("invalid city name: %s", cityName)
+			}
 			fmt.Println(api.GetWetherByCity(cityName))
 			return nil
 		},

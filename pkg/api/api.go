@@ -16,14 +16,43 @@ type WeatherResponse map[string]string
 
 // GetWetherByCountry returns map[date]temp for the given city
 func (api *FakeAPI) GetWetherByCity(city string) WeatherResponse {
-	return WeatherResponse{
-		"today":    "+18",
-		"tomorrow": "+22",
-		"1.08":     "+20",
-		"2.08":     "+25",
-		"3.08":     "+24",
-		"4.08":     "+26",
-		"5.08":     "+18",
-		"6.08":     "+21",
+
+	switch city {
+	case "berlin":
+		return WeatherResponse{
+			"today":    "+3",
+			"tomorrow": "+4",
+			"1.12":     "+3",
+		}
+	case "munchen":
+		return WeatherResponse{
+			"today":    "0",
+			"tomorrow": "-1",
+			"1.12":     "+2",
+		}
+	case "frankfurt":
+		return WeatherResponse{
+			"today":    "+1",
+			"tomorrow": "0",
+			"1.12":     "+4",
+		}
+	case "leipzig":
+		return WeatherResponse{
+			"today":    "+2",
+			"tomorrow": "+4",
+			"1.12":     "+2",
+		}
+	case "longon":
+		return WeatherResponse{
+			"today":    "+8",
+			"tomorrow": "+10",
+			"1.12":     "+11",
+		}
+	default:
+		return WeatherResponse{
+			"today":    "+18",
+			"tomorrow": "+22",
+			"1.12":     "+20",
+		}
 	}
 }

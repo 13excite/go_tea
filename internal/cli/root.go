@@ -4,6 +4,7 @@ package cli
 import (
 	"os"
 
+	"gotea/internal/cli/tui"
 	"gotea/internal/cli/weather"
 
 	"github.com/spf13/cobra"
@@ -28,4 +29,5 @@ func Execute() {
 
 func init() {
 	rootCmd.AddCommand(weather.NewWeatherCommand())
+	rootCmd.AddCommand(tui.NewTUICommand())
 }
