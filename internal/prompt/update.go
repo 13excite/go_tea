@@ -15,7 +15,9 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			} else {
 				m.table.Focus()
 			}
-		case "q", "ctrl+c":
+		case tea.KeyCtrlC.String():
+			// clear a user choice before exit
+			m.userChoice.Command = nil
 			return m, tea.Quit
 		case "enter":
 			return m, tea.Batch(

@@ -2,10 +2,11 @@ package prompt
 
 import (
 	"github.com/charmbracelet/lipgloss"
-	//tea "github.com/charmbracelet/bubbletea"
+
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbles/table"
 	"github.com/charmbracelet/bubbles/textarea"
+	"github.com/charmbracelet/bubbles/textinput"
 )
 
 const listHeight = 10
@@ -22,6 +23,9 @@ var (
 	paginationStyle   = list.DefaultStyles().PaginationStyle.PaddingLeft(4)
 	selectedItemStyle = lipgloss.NewStyle().PaddingLeft(2).Foreground(lipgloss.Color("150"))
 	titleStyle        = lipgloss.NewStyle().MarginLeft(2)
+	focusedStyle      = lipgloss.NewStyle().Foreground(lipgloss.Color("205"))
+	cursorStyle       = focusedStyle.Copy()
+	noStyle           = lipgloss.NewStyle()
 )
 
 // item implements list.Item interface
@@ -109,4 +113,15 @@ func createListView(flagName string) list.Model {
 	l.Styles.HelpStyle = helpStyle
 
 	return l
+}
+
+func createInputView() textinput.Model {
+	txt := textinput.New()
+	txt.Cursor.Style = cursorStyle
+	txt.CharLimit = 40
+
+	txt.Placeholder = ""
+	txt.PromptStyle = noStyle
+	txt.TextStyle = noStyle
+	return txt
 }
