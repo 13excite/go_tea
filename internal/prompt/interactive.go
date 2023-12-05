@@ -22,10 +22,11 @@ type Model struct {
 	isFlagMode      bool // will be true if command doesn't have subcommands
 	textAreaEnabled bool // will be true if command has flags
 	submitButton    string
+	textAreaMsg     string // contains a flag desctiption of command
 	table           table.Model
 	list            list.Model
 	input           textinput.Model
-	userChoice      *UserChoice // set user selected command cli here
+	userChoice      *UserChoice // set command for CLI which user has chosen in the UI
 	command         *cobra.Command
 	subCommands     []subCommand // contains subcommands of the command
 }

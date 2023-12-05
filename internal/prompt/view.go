@@ -1,18 +1,24 @@
 package prompt
 
 import (
-	"github.com/charmbracelet/lipgloss"
+	"fmt"
 
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbles/table"
 	"github.com/charmbracelet/bubbles/textarea"
 	"github.com/charmbracelet/bubbles/textinput"
+	"github.com/charmbracelet/lipgloss"
 )
 
 const listHeight = 10
 const listWidth = 30
 const tableColumnWidth = 30
 const commandTableColumnName = "Command names"
+
+// item implements list.Item interface
+type item string
+
+func (i item) FilterValue() string { return string(i) }
 
 var (
 	baseStyle = lipgloss.NewStyle().
@@ -26,19 +32,29 @@ var (
 	focusedStyle      = lipgloss.NewStyle().Foreground(lipgloss.Color("205"))
 	cursorStyle       = focusedStyle.Copy()
 	noStyle           = lipgloss.NewStyle()
+	blurredStyle      = lipgloss.NewStyle().Foreground(lipgloss.Color("240"))
+	focusedButton     = focusedStyle.Copy().Render("[ Submit ]")
+	blurredButton     = fmt.Sprintf("[ %s ]", blurredStyle.Render("Submit"))
+	helpStyleRender   = helpStyle.Copy().Width(100).Bold(true).Render
+	docStyle          = lipgloss.NewStyle().Margin(1, 2)
 )
-
-// item implements list.Item interface
-type item string
-
-func (i item) FilterValue() string { return string(i) }
 
 // View returns the string representation of the main view
 func (m Model) View() string {
+	table := baseStyle.Render(m.table.View())
+	input := m.input.View()
+	list := m.list.View()
+	button := m.submitButton
 
-	//table := baseStyle.Render(m.table.View())
+	helpString := helpStyleRender(`
+	TODO: add help string`)
 
-	return baseStyle.Render(m.table.View()) + "\n"
+	//return baseStyle.Render(m.table.View()) + "\n"
+	return lipgloss.JoinHorizontal(
+		lipgloss.Top,
+		table,
+		docStyle.Render(list),
+	) + "\n\n" + input + "\n" + button + "\n\n" + helpString
 }
 
 // createCommandsTableView creates a table of the commands that are available to the user
