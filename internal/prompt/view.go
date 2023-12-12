@@ -141,3 +141,16 @@ func createInputView() textinput.Model {
 	txt.TextStyle = noStyle
 	return txt
 }
+
+// createTableView creates a table for flags of a cobra command
+func createFlagTableView(title string, width int, arguments []argument) table.Model {
+	columns := []table.Column{
+		{Title: title, Width: 30},
+		{Title: "Current value", Width: width + 10},
+	}
+	rows := []table.Row{}
+	for _, val := range arguments {
+		rows = append(rows, table.Row{val.name, val.value.String()})
+	}
+	return createTableTemplate(columns, rows)
+}
