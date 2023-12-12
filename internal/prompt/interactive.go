@@ -23,6 +23,7 @@ type Model struct {
 	textAreaEnabled bool // will be true if command has flags
 	submitButton    string
 	textAreaMsg     string // contains a flag desctiption of command
+	argument        argument
 	table           table.Model
 	list            list.Model
 	input           textinput.Model
