@@ -2,6 +2,7 @@ package prompt
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbles/table"
@@ -41,15 +42,35 @@ var (
 
 // View returns the string representation of the main view
 func (m Model) View() string {
+	if m.showPopup {
+		return fmt.Sprintf("\n\n%s\n\n%s\n\n[Enter] OK", m.popupMsg, strings.Repeat("-", 15))
+	}
 	table := baseStyle.Render(m.table.View())
 	input := m.input.View()
 	list := m.list.View()
 	button := m.submitButton
 
 	helpString := helpStyleRender(`
-	TODO: add help string`)
+        Use the arrow keys to navigate.
+        Press ctrl+e or space to switch to the input form and set a value manually.
+        Press tab to switch between a table form and a submit button.
+        Press enter on the submit button to run selected command.
+        Press enter on the table form for selecting the available value from drop down list.
+        Press esc to return to the previous form or to exit
+	`)
 
-	//return baseStyle.Render(m.table.View()) + "\n"
+	// if textArea is enabled and it's a flag mode
+	// then textArea form of the flags description will be shown
+	if m.isFlagMode && m.textAreaEnabled {
+		tArea := createTextArea(m.textAreaMsg)
+		return lipgloss.JoinHorizontal(
+			lipgloss.Top,
+			table,
+			lipgloss.JoinVertical(lipgloss.Top, "Flag description", tArea.View()),
+			docStyle.Render(list),
+		) + "\n\n" + input + "\n" + button + "\n\n" + helpString
+	}
+
 	return lipgloss.JoinHorizontal(
 		lipgloss.Top,
 		table,

@@ -34,6 +34,12 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			// blur the button after each ESC pressing
 			m.submitButton = blurredButton
 
+			// if popup view is active switch to a table form
+			if m.showPopup {
+				m.switchFromPopUpToTable()
+				return m, nil
+			}
+
 			// switch to a table form if list or input form selected
 			if m.isListFocused() || m.input.Focused() {
 				m.switchToTableForm()
@@ -56,6 +62,10 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.userChoice.Command = nil
 			return m, tea.Quit
 		case "enter":
+			if m.showPopup {
+				m.switchFromPopUpToTable()
+				return m, nil
+			}
 			cmdIndex := m.table.Cursor()
 			if m.table.Focused() {
 				// if command doesn't have flags just skip rendering after "enter" pressed
@@ -72,10 +82,10 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				return m, nil
 			}
 			if m.isSubmitButtonActive() {
-				// TODO: if user input is incorrect - show popup
-				// if !m.isUserInputCorrect() {
-				// 	return m, nil
-				// }
+				// if user input is incorrect - show popup
+				if !m.isUserInputCorrect() {
+					return m, nil
+				}
 				m.userChoice.Command = m.command
 				return m, tea.Quit
 			}

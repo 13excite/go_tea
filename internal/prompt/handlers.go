@@ -157,3 +157,28 @@ func (m *Model) updateTableFromList(cmdIndex int) {
 func (m *Model) isSubmitButtonActive() bool {
 	return m.isFlagMode && (m.submitButton == focusedButton) && !m.table.Focused()
 }
+
+func (m *Model) switchFromPopUpToTable() {
+	m.showPopup = false
+	m.popupMsg = ""
+	// 0 index used because a popup view always has 1 item
+	// and it's always a command
+	m.switchToCommandOrFlagForm(0)
+}
+
+// isUserInputCorrect returns true if user filled all required flags
+func (m *Model) isUserInputCorrect() bool {
+	if err := m.command.ValidateRequiredFlags(); err != nil {
+		m.submitButton = blurredButton
+		m.showPopup = true
+		m.popupMsg = "Required Flags were not set"
+		return false
+	}
+	if !IsUserInputFlagsValid(m.command) {
+		m.submitButton = blurredButton
+		m.showPopup = true
+		m.popupMsg = "Required Flags were not set"
+		return false
+	}
+	return true
+}
