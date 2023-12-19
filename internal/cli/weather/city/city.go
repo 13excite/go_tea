@@ -12,6 +12,7 @@ import (
 )
 
 var (
+	testName string
 	cityName string
 	// cityMap contains valid values of the 'cityName' argument
 	cityMap = map[string]struct{}{
@@ -56,6 +57,7 @@ func NewCityCommand() *cobra.Command {
 	}
 
 	setupCityNameFlag()(createCmd)
+	setupTestNameFlag()(createCmd)
 	return createCmd
 }
 
@@ -80,5 +82,13 @@ func setupCityNameFlag() commandOpt {
 		}); err != nil {
 			log.Printf("failed to register autocomplete func: %s", err)
 		}
+	}
+}
+
+func setupTestNameFlag() commandOpt {
+	const flagName = "test-name"
+	return func(cmd *cobra.Command) {
+
+		cmd.Flags().StringVarP(&testName, flagName, "t", "sample", "just test flag")
 	}
 }
