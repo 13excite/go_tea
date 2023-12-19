@@ -21,6 +21,8 @@ type UserChoice struct {
 type Model struct {
 	isFlagMode      bool // will be true if command doesn't have subcommands
 	textAreaEnabled bool // will be true if command has flags
+	showPopup       bool
+	popupMsg        string
 	submitButton    string
 	textAreaMsg     string // contains a flag desctiption of command
 	argument        argument
